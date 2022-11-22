@@ -161,7 +161,7 @@ public class SignInUserTest {
                 given()
                         .auth().oauth2(accessToken.replace("Bearer ", ""))
                         .when()
-                        .delete(StellarBurgersAPI.DELETE_USER_API);
+                        .delete(StellarBurgersAPI.UPDATE_AND_DELETE_USER_API);
 
         response.then().assertThat().body("success", equalTo(true))
                 .and().body("message", equalTo(StellarBurgersAPI.expectedSuccessfulRemovedMessage))
