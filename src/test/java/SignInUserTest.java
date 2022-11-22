@@ -56,6 +56,105 @@ public class SignInUserTest {
                 .and().statusCode(200);
     }
 
+    @Test
+    public void signInUserWithInvalidEmail() {
+        user.setEmail(DataGenerator.getRandomEmail());
+        userJson = gson.toJson(user);
+        Response response =
+                given()
+                        .header("Content-type", "application/json")
+                        .and()
+                        .body(userJson)
+                        .when()
+                        .post(StellarBurgersAPI.SIGN_IN_USER_API);
+
+        response.then().assertThat().body("success", equalTo(false))
+                .and().body("message", equalTo("email or password are incorrect"))
+                .and().statusCode(401);
+    }
+
+    @Test
+    public void signInUserWithInvalidPassword() {
+        user.setPassword(DataGenerator.getRandomPassword());
+        userJson = gson.toJson(user);
+        Response response =
+                given()
+                        .header("Content-type", "application/json")
+                        .and()
+                        .body(userJson)
+                        .when()
+                        .post(StellarBurgersAPI.SIGN_IN_USER_API);
+
+        response.then().assertThat().body("success", equalTo(false))
+                .and().body("message", equalTo("email or password are incorrect"))
+                .and().statusCode(401);
+    }
+
+    @Test
+    public void signInUserWithInvalidName() {
+        String oldUserName = user.getName();
+        user.setName(DataGenerator.getRandomName());
+        userJson = gson.toJson(user);
+        Response response =
+                given()
+                        .header("Content-type", "application/json")
+                        .and()
+                        .body(userJson)
+                        .when()
+                        .post(StellarBurgersAPI.SIGN_IN_USER_API);
+
+        response.then().assertThat().body("success", equalTo(true))
+                .and().body("user.email", equalTo(user.getEmail()))
+                .and().body("user.name", equalTo(oldUserName))
+                .and().statusCode(200);
+    }
+
+    @Test
+    public void signInUserWithoutEmail() {
+        Response response =
+                given()
+                        .header("Content-type", "application/json")
+                        .and()
+                        .body(user.getJsonWithoutEmail())
+                        .when()
+                        .post(StellarBurgersAPI.SIGN_IN_USER_API);
+
+        response.then().assertThat().body("success", equalTo(false))
+                .and().body("message", equalTo("email or password are incorrect"))
+                .and().statusCode(401);
+    }
+
+    @Test
+    public void signInUserWithoutPassword() {
+        Response response =
+                given()
+                        .header("Content-type", "application/json")
+                        .and()
+                        .body(user.getJsonWithoutPassword())
+                        .when()
+                        .post(StellarBurgersAPI.SIGN_IN_USER_API);
+
+        response.then().assertThat().body("success", equalTo(false))
+                .and().body("message", equalTo("email or password are incorrect"))
+                .and().statusCode(401);
+    }
+
+    @Test
+    public void signInUserWithoutName() {
+        Response response =
+                given()
+                        .header("Content-type", "application/json")
+                        .and()
+                        .body(user.getJsonWithoutName())
+                        .when()
+                        .post(StellarBurgersAPI.SIGN_IN_USER_API);
+
+        response.then().assertThat().body("success", equalTo(true))
+                .and().body("user.email", equalTo(user.getEmail()))
+                .and().body("user.name", equalTo(user.getName()))
+                .and().statusCode(200);
+    }
+
     @After
     public void teardown() {
         Response response =
