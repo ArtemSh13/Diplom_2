@@ -5,7 +5,7 @@ public class StellarBurgersAPI {
     public static final String UPDATE_AND_DELETE_USER_API = "api/auth/user";
     public static final String expectedUserAlreadyExistsMessage = "User already exists";
     public static final String expectedRequiredFieldsMessage = "Email, password and name are required fields";
-    public static final String expectedAuthorisedMessage = "You should be authorised";
+    public static final String expectedRequiredAuthorisedMessage = "You should be authorised";
     public static final String expectedSuccessfulRemovedMessage = "User successfully removed";
 
 }
