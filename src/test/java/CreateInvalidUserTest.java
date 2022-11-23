@@ -1,8 +1,5 @@
-import com.google.gson.Gson;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -21,7 +18,7 @@ public class CreateInvalidUserTest {
     @Parameterized.Parameters
     public static Object[] getTestData() {
         User user = new User(DataGenerator.getRandomEmail(), DataGenerator.getRandomPassword(), DataGenerator.getRandomName());
-        return new Object[] {
+        return new Object[]{
                 user.getJsonWithoutEmail(),
                 user.getJsonWithoutPassword(),
                 user.getJsonWithoutName()
