@@ -3,6 +3,7 @@ import io.restassured.response.Response;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.notNullValue;
 
 public class Utility {
 
@@ -36,5 +37,26 @@ public class Utility {
         response.then().assertThat().body("success", equalTo(true))
                 .and().body("message", equalTo(StellarBurgersAPI.expectedSuccessfulRemovedMessage))
                 .and().statusCode(202);
+    }
+
+    public static int createOrderAndGetOrderNumber(String accessToken, Order order) {
+        Gson gson = new Gson();
+
+        Response response =
+                given()
+                        .header("Content-type", "application/json")
+                        .and()
+                        .auth().oauth2(Utility.cleanAccessToken(accessToken))
+                        .and()
+                        .body(gson.toJson(order))
+                        .when()
+                        .post(StellarBurgersAPI.CREATE_AND_GET_ORDER_API);
+
+        response.then().assertThat().body("success", equalTo(true))
+                .and().body("order.number", notNullValue())
+                .and().body("name", notNullValue())
+                .and().statusCode(200);
+
+        return response.then().extract().path("order.number");
     }
 }
