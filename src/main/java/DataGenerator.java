@@ -9,11 +9,11 @@ public class DataGenerator {
     }
 
     public static String getRandomEmail () {
-        return "email" + random.nextInt(999999) + "@yandex.ru";
+        return "email" + random.nextInt(999999999) + "@yandex.ru";
     }
 
     public static String getRandomPassword () {
-        return "p@s$w0RD" + random.nextInt(999999);
+        return "p@s$w0RD" + random.nextInt(999999999);
     }
 
     public static String getLoginPasswordJson (String login, String password) {
@@ -21,6 +21,6 @@ public class DataGenerator {
     }
 
     public static String getRandomName () {
-        return "name" + random.nextInt(999999);
+        return "name" + random.nextInt(999999999);
     }
 }
