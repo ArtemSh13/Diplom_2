@@ -22,19 +22,7 @@ public class UpdateUserTest {
         RestAssured.baseURI = StellarBurgersAPI.BASE_URL;
         user = new User(DataGenerator.getRandomEmail(), DataGenerator.getRandomPassword(), DataGenerator.getRandomName());
         userJson = gson.toJson(user);
-        Response response =
-                given()
-                        .header("Content-type", "application/json")
-                        .and()
-                        .body(userJson)
-                        .when()
-                        .post(StellarBurgersAPI.CREATE_USER_API);
-
-        response.then().assertThat().body("success", equalTo(true))
-                .and().statusCode(200);
-
-        accessToken = response.then().extract().path("accessToken");
-        refreshToken = response.then().extract().path("refreshToken");
+        accessToken = Utility.createUserAndGetaAccessToken(user);
 
     }
 
@@ -114,14 +102,6 @@ public class UpdateUserTest {
 
     @After
     public void teardown() {
-        Response response =
-                given()
-                        .auth().oauth2(accessToken.replace("Bearer ", ""))
-                        .when()
-                        .delete(StellarBurgersAPI.UPDATE_AND_DELETE_USER_API);
-
-        response.then().assertThat().body("success", equalTo(true))
-                .and().body("message", equalTo(StellarBurgersAPI.expectedSuccessfulRemovedMessage))
-                .and().statusCode(202);
+        Utility.deleteUser(accessToken);
     }
 }
