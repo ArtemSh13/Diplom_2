@@ -22,4 +22,8 @@ public class Order {
     public int getNumberOfIngredients() {
         return ingredients.size();
     }
+
+    public void addIngredient(String ingredient) {
+        ingredients.add(ingredient);
+    }
 }
