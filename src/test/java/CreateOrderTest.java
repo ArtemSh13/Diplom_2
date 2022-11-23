@@ -57,7 +57,7 @@ public class CreateOrderTest {
                         .and()
                         .body(orderJson)
                         .when()
-                        .post(StellarBurgersAPI.CREATE_ORDER_API);
+                        .post(StellarBurgersAPI.CREATE_AND_GET_ORDER_API);
 
         response.then().assertThat().body("success", equalTo(true))
                 .and().body("order.number", notNullValue())
@@ -86,7 +86,7 @@ public class CreateOrderTest {
                         .and()
                         .body(orderJson)
                         .when()
-                        .post(StellarBurgersAPI.CREATE_ORDER_API);
+                        .post(StellarBurgersAPI.CREATE_AND_GET_ORDER_API);
 
         response.then().assertThat().body("success", equalTo(true))
                 .and().body("order.number", notNullValue())
@@ -105,7 +105,7 @@ public class CreateOrderTest {
                         .header("Content-type", "application/json")
                         .and()
                         .when()
-                        .post(StellarBurgersAPI.CREATE_ORDER_API);
+                        .post(StellarBurgersAPI.CREATE_AND_GET_ORDER_API);
 
         response.then().assertThat().body("success", equalTo(false))
                 .and().body("message", equalTo(StellarBurgersAPI.expectedRequiredIngredientsMessage))
@@ -125,7 +125,7 @@ public class CreateOrderTest {
                         .and()
                         .body(orderJson)
                         .when()
-                        .post(StellarBurgersAPI.CREATE_ORDER_API);
+                        .post(StellarBurgersAPI.CREATE_AND_GET_ORDER_API);
 
         response.then().assertThat().statusCode(500);
 
