@@ -8,5 +8,6 @@ public class StellarBurgersAPI {
     public static final String expectedRequiredFieldsMessage = "Email, password and name are required fields";
     public static final String expectedRequiredAuthorisedMessage = "You should be authorised";
     public static final String expectedSuccessfulRemovedMessage = "User successfully removed";
+    public static final String expectedRequiredIngredientsMessage = "Ingredient ids must be provided";
 
 }
