@@ -33,27 +33,13 @@ public class CreateOrderTest {
     @Test
     public void createOrderWithAuthAndCheckResponse() {
         User user = new User(DataGenerator.getRandomEmail(), DataGenerator.getRandomPassword(), DataGenerator.getRandomName());
-        String userJson = gson.toJson(user);
-        Response createUserResponse =
-                given()
-                        .header("Content-type", "application/json")
-                        .and()
-                        .body(userJson)
-                        .when()
-                        .post(StellarBurgersAPI.CREATE_USER_API);
-
-        createUserResponse.then().assertThat().body("success", equalTo(true))
-                .and().statusCode(200);
-
-
-        String accessToken = createUserResponse.then().extract().path("accessToken");
-        String refreshToken = createUserResponse.then().extract().path("refreshToken");
+        String accessToken = Utility.createUserAndGetaAccessToken(user);
 
         Response response =
                 given()
                         .header("Content-type", "application/json")
                         .and()
-                        .auth().oauth2(accessToken.replace("Bearer ", ""))
+                        .auth().oauth2(Utility.cleanAccessToken(accessToken))
                         .and()
                         .body(orderJson)
                         .when()
@@ -66,15 +52,7 @@ public class CreateOrderTest {
 
         orderNumber = response.then().extract().path("order.number");
 
-        Response deleteUserResponse =
-                given()
-                        .auth().oauth2(accessToken.replace("Bearer ", ""))
-                        .when()
-                        .delete(StellarBurgersAPI.UPDATE_AND_DELETE_USER_API);
-
-        deleteUserResponse.then().assertThat().body("success", equalTo(true))
-                .and().body("message", equalTo(StellarBurgersAPI.expectedSuccessfulRemovedMessage))
-                .and().statusCode(202);
+        Utility.deleteUser(accessToken);
     }
 
     // без авторизации, с ингредиентами
