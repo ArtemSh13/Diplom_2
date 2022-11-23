@@ -1,7 +1,6 @@
 import com.google.gson.Gson;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -33,7 +32,7 @@ public class CreateOrderTest {
     @Test
     public void createOrderWithAuthAndCheckResponse() {
         User user = new User(DataGenerator.getRandomEmail(), DataGenerator.getRandomPassword(), DataGenerator.getRandomName());
-        String accessToken = Utility.createUserAndGetaAccessToken(user);
+        String accessToken = Utility.createUserAndGetAccessToken(user);
 
         Response response =
                 given()

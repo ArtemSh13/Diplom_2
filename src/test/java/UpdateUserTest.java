@@ -4,8 +4,6 @@ import io.restassured.response.Response;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
@@ -22,7 +20,7 @@ public class UpdateUserTest {
         RestAssured.baseURI = StellarBurgersAPI.BASE_URL;
         user = new User(DataGenerator.getRandomEmail(), DataGenerator.getRandomPassword(), DataGenerator.getRandomName());
         userJson = gson.toJson(user);
-        accessToken = Utility.createUserAndGetaAccessToken(user);
+        accessToken = Utility.createUserAndGetAccessToken(user);
 
     }
 

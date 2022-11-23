@@ -6,7 +6,7 @@ import static org.hamcrest.Matchers.equalTo;
 
 public class Utility {
 
-    public static String createUserAndGetaAccessToken(User user) {
+    public static String createUserAndGetAccessToken(User user) {
         Gson gson = new Gson();
         Response response =
                 given()
